@@ -1,15 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
+//
+//void insertionSort(int arr[], int n){
+//	for(int i = 1; i < n; i++){
+//		while(arr[i] < arr[i - 1] && i > 0){
+//			swap(arr[i], arr[i - 1]);
+//			i--;
+//		}
+//	}
+//	
+//}
 
 void insertionSort(int arr[], int n){
-	if(n == 0) return;
-	for(int i = 1; i < n; i++){
-		while(arr[i] < arr[i - 1] && i > 0){
-			swap(arr[i], arr[i - 1]);
-			i--;
+	for (int sortedSize = 1; sortedSize < n; sortedSize++) {
+		for (int i = sortedSize; i > 0; i--) {
+			if (arr[i] < arr[i - 1])
+				swap(arr[i], arr[i - 1]);
+			else break;
 		}
 	}
-	
 }
 
 int main(){
