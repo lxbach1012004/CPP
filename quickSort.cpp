@@ -1,33 +1,41 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int partition(int arr[], int start, int end){
-	int pivotIndex = start;
-	for(int i = start; i < end; i++){
-		if(arr[i] < arr[end]){
-			swap(arr[i], arr[pivotIndex]);
-			pivotIndex++;
+int partition(int low, int high, int arr[]) {
+	int pivot = arr[low];
+	int i = low, j = high;
+	while (i < j) {
+		do {
+			i++;
+		} while (arr[i] < pivot);
+		
+		do {
+			j--;
+		} while (arr[j] > pivot);
+		
+		if (i < j) {
+			swap(arr[i], arr[j]);
 		}
 	}
-	swap(arr[pivotIndex], arr[end]);
-	return pivotIndex;
+	swap(arr[low], arr[j]);
+	return j;
 }
 
-void quickSort(int arr[], int start, int end){
-	if(start >= end) return;
-	int pivot = partition(arr, start, end);
-	quickSort(arr, start, pivot - 1);
-	quickSort(arr, pivot + 1, end);
+void quickSort(int low, int high, int arr[]) {
+	if (low < high) {
+		int j = partition(low, high, arr);
+		quickSort(low, j, arr);
+		quickSort(j + 1, high, arr);
+	}
 }
-
-int arr[100001];
 
 int main(){
-    int n, 
+	int arr[10001];
+    int n;
     cin >> n;
     for(int i = 0; i < n; i++)
     	cin >> arr[i];
-    quickSort(arr, 0, n - 1);
+    quickSort(0, n, arr);
     for(int i = 0; i < n; i++)
     	cout << arr[i] << " ";
 }
