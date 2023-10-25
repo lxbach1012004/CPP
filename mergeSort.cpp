@@ -1,53 +1,48 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void merge(int left[], int right[], int big[], int nL, int nR){
-    int i = 0, j = 0, k = 0;
-    while(i < nL && j < nR){
-        if(left[i] <= right[j]){
-            big[k] = left[i];
-            i++;
-            k++;
-        }
-        else{
-            big[k] = right[j];
-            j++;
-            k++;
-        }
-    }
-    while(i < nL){
-        big[k] = left[i];
-        i++;
-        k++;
-    }
-    while(j < nR){
-        big[k] = right[j];
-        j++;
-        k++;
-    }
+void merge(int arr[], int low, int high) {
+	static int b[10005];
+	int mid = (low + high) / 2;
+	int i = low, j = mid + 1, k = 0;
+	
+	while (i <= mid && j <= high) {
+		if (arr[i] <= arr[j]) {
+			b[k++] = arr[i];
+			i++;
+		} else {
+			b[k++] = arr[j];
+			j++;
+		}
+	}
+	
+	for (; i <= mid; i++) {
+		b[k++] = arr[i];
+	}
+	
+	for (; j <= high; j++) {
+		b[k++] = arr[j];
+	}
+	
+	for (int x = low; x <= high; x++) 
+		arr[x] = b[x - low];
 }
 
-void mergeSort(int arr[], int n){
-    if(n < 2) return;
-    int mid = n / 2;
-    int left[100005], right[100005];
-    for(int i = 0; i < mid; i++){
-        left[i] = arr[i];
-    }
-    for(int i = mid; i < n; i++){
-        right[i - mid] = arr[i];
-    }
-    mergeSort(left, mid);
-    mergeSort(right, n - mid);
-    merge(left, right, arr, mid, n - mid);
+void mergeSort(int arr[], int low, int high) {
+	if (low < high) {
+		int mid = (low + high) / 2;
+		mergeSort(arr, low, mid);
+		mergeSort(arr, mid + 1, high);
+		merge(arr, low, high);
+	}
 }
 
 int main(){
-    int n, arr[100005];
+    int n, arr[10005];
     cin >> n;
     for(int i = 0; i < n; i++)
         cin >> arr[i];
-    mergeSort(arr, n);
+    mergeSort(arr, 0, n - 1);
     for(int i = 0; i < n; i++)
         cout << arr[i] << " ";
 }
