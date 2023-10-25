@@ -35,6 +35,7 @@ int main(){
     cin >> n;
     for(int i = 0; i < n; i++)
     	cin >> arr[i];
+    arr[n] = INT_MAX;
     quickSort(0, n, arr);
     for(int i = 0; i < n; i++)
     	cout << arr[i] << " ";
