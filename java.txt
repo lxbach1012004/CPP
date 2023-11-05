@@ -1,0 +1,126 @@
+- khi định nghĩa một lớp, chúng ta có thể định nghĩa nhiều phương thức cùng tên 
+với kiểu của tham số hoặc số lượng tham số khác nhau. Đặc tính này được gọi là gì?
+=>Nạp chồng phương thức
+
++ hàm khởi tạo static=> sai
++ nếu một lớp được khai báo final thì tất cả phương thức của nó đều phải khai báo final => sai
++ sau một khối try phải là một khối catch kèm theo một khối finally => sai
++ chỉ có thể bắt được các ngoại lệ mà trình biên dịch kiểm tra => sai
++ một khối finally sẽ được chạy bất kể ngoại lệ có được ném hay không => đúng
++ lúc nào một đối tượng thuộc diện dùng được đều phải có một tham chiếu chiếu tới nó => sai
+
+VD tính đa hình
+class Animal {
+    void makeSound() {
+        System.out.println("Animal makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    void makeSound() {
+        System.out.println("Dog barks");
+    }
+}
+
+class Cat extends Animal {
+    void makeSound() {
+        System.out.println("Cat meows");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal myPet; // Tham chiếu kiểu lớp cha
+
+        myPet = new Dog();
+        myPet.makeSound();
+
+        myPet = new Cat();
+        myPet.makeSound();
+    }
+}
+
+- một ví dụ về quan hệ has_a và một ví dụ về quan hệ is_a trong java
+has_a:
+class Engine {
+    // Một lớp đại diện cho động cơ
+}
+
+class Car {
+    private Engine carEngine; // Một xe hơi "có" một động cơ
+
+    public Car() {
+        carEngine = new Engine(); // Khởi tạo một động cơ cho xe hơi
+    }
+}
+
+is_a:
+class Animal {
+    void eat() {
+        System.out.println("Animal is eating");
+    }
+}
+
+class Dog extends Animal {
+    void bark() {
+        System.out.println("Dog is barking");
+    }
+}
+
+class Cat extends Animal {
+    void meow() {
+        System.out.println("Cat is meowing");
+    }
+}
+
+- nếu lớp cha khai báo một phương thức trừu tượng thì lớp con bắt buộc phải cài đặt phương thức đó
+Lớp con bắt buộc phải cài đặt (implement) tất cả các phương thức trừu tượng của lớp cha
+
+- cơ chế upcasting và downcasting như nào? cho ví dụ
+upcasting + downcasting:
+class Animal {
+    void sound() {
+        System.out.println("Animal makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal myPet = new Dog(); // Upcasting
+        myPet.sound();
+
+        if (myPet instanceof Dog) {
+            Dog myDog = (Dog) myPet; // Downcasting
+            myDog.playFetch();
+        }
+    }
+}
+
+không thể downcast khi đối tượng không phải là một thể hiện của lớp con
+
+-Trong Java, khi bạn truyền một tham số cho một phương thức, bạn đang thực hiện việc truyền tham trị, không phải truyền tham chiếu. 
+Điều này có nghĩa là bạn truyền một bản sao của giá trị tham số và không ảnh hưởng trực tiếp đến biến gốc bên ngoài phương thức.
+VD:
+class Main {
+
+    public void modifyNumber(int num) {
+        num = 20;
+        System.out.println("Number inside modifyNumber: " + num);
+    }
+
+    public static void main(String[] args) {
+        int number = 10;
+        modifyNumber(number);
+        System.out.println("Number after modification: " + number);
+    }
+
+    
+}
+
+
